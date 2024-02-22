@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour, IMusicGameManager
     [SerializeField]
     private ButtonHammerConnection[] m_ButtonHammerConnections;
     private bool[] m_ButtonsActive;
-
+    [SerializeField]
+    private TargetBehavior[] m_Targets;
 
     [Serializable]
     public class ActiveRange
@@ -44,6 +45,10 @@ public class GameManager : MonoBehaviour, IMusicGameManager
             set { m_OutHeight = value; }
         }
 
+        public bool IsInRange(float p_YPos)
+        {
+            return p_YPos <= m_Top && p_YPos >= m_Bottom;
+        }
     }
     [SerializeField]
     private ActiveRange m_TickRange;
@@ -58,6 +63,12 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         ResetButtonsState();
 
         IMusicTick.GrantPointsEvent += ReceivePoints;
+
+        ComboCounts = ComboRanges;
+        for (int i = 1; i < ComboCounts.Length; ++i)
+        {
+            ComboCounts[i] += ComboCounts[i - 1];
+        }
     }
 
     private void OnDestroy()
@@ -94,7 +105,7 @@ public class GameManager : MonoBehaviour, IMusicGameManager
 
     #endif
 
-    private void Update()
+    private void FixedUpdate()
     {
         ResetButtonsState();
 
@@ -130,6 +141,7 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         #endif
 
         AnimateHammers();
+        ActivateTargets();
     }
 
     private void AnimateHammers()
@@ -147,14 +159,73 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         }
     }
 
+    private void ActivateTargets()
+    {
+        int ButtonIdx = 0;
+        foreach (TargetBehavior target in m_Targets)
+        {
+            target.ActivateTarget(m_ButtonsActive[ButtonIdx]);
+            ++ButtonIdx;
+        }
+    }
+
+    private uint m_ComboIdx = 0;
+    private int m_TickCount = 0;
+    [SerializeField]
+    private int[] ComboRanges;
+    private int[] ComboCounts;
+    [SerializeField]
+    private int[] ComboMultipliers;
+    public void BreakCombo()
+    {
+        Debug.Log($"LOG: Combo broken");
+        m_ComboIdx = 0;
+        m_TickCount = 0;
+    }
+    public void IncreaseCombo()
+    {
+        Debug.Log($"LOG: Combo increased");
+        m_TickCount++;
+        m_ComboCountText.text = m_TickCount.ToString();
+        if (m_ComboIdx < ComboCounts.Length && m_TickCount >= ComboCounts[m_ComboIdx])
+        {
+            Debug.Log($"LOG: Combo is at next idx {m_ComboIdx}");
+            m_ComboIdx++;
+        }
+        m_ComboMultText.text = GetComboMultiplier().ToString();
+    }
+    public int GetComboMultiplier()
+    {
+        return ComboMultipliers[m_ComboIdx];
+    }
+
     public AudioSource GetAudioSource()
     {
         throw new System.NotImplementedException();
     }
 
-    public void ReceivePoints(int iPoints)
+    private int m_CurPoints = 0;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI m_PointsText;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI m_ComboCountText;
+    [SerializeField]
+    private TMPro.TextMeshProUGUI m_ComboMultText;
+    public void ReceivePoints(int p_Points, IMusicTick p_CurTick = null)
     {
-        throw new System.NotImplementedException();
+        if (p_Points == 0)
+        {
+            BreakCombo();
+            return;
+        }
+
+        if (p_CurTick != null)  // && p_CurTick.TickAvailableToPlay())
+        {
+            IncreaseCombo();
+        }
+        Debug.Log($"LOG: Points granted: {p_Points}");
+        m_CurPoints += GetComboMultiplier() * p_Points;
+        m_PointsText.text = m_CurPoints.ToString();
     }
 
     public void ParseInformation()
@@ -170,7 +241,7 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         throw new System.NotImplementedException();
     }
 
-    public void SetCurrentLevel(int iLevelIdx)
+    public void SetCurrentLevel(int p_LevelIdx)
     {
         throw new System.NotImplementedException();
     }
