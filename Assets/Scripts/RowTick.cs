@@ -19,9 +19,7 @@ public class RowTick : MonoBehaviour, IMusicTick
     private bool m_Single = true;
 
     private bool m_TickPlayable = true;
-    private bool m_TickPlayed = false;
-    //[SerializeField]
-    //private Timer m_PlayRangeTimer;
+    //private bool m_TickPlayed = false;
     public bool Playable()
     {
         return m_TickPlayable;
@@ -33,11 +31,7 @@ public class RowTick : MonoBehaviour, IMusicTick
             return;
         }
 
-        //if (m_PlayRangeTimer != null && !m_PlayRangeTimer.IsPlaying())
-        //{
-            //m_PlayRangeTimer.Play();
-        //}
-        m_TickPlayed = true;
+        //m_TickPlayed = true;
         if (m_Single)
         {
             m_TickPlayable = false;
@@ -45,44 +39,39 @@ public class RowTick : MonoBehaviour, IMusicTick
     }
     public bool TickAvailableToPlay()
     {
-        //bool TimerIsPlaying = true;
-        //if (m_PlayRangeTimer != null)
-        //{
-        //TimerIsPlaying = m_PlayRangeTimer.IsPlaying();
-        //m_PlayRangeTimer.Stop();
-        //}
-        //Debug.Log($"LOG: PlayableTick");
-        //return m_TickPlayed == true && TimerIsPlaying;
-
         return !m_Single;
     }
 
     private void Update()
     {
         Move();
-        //CheckPos();
     }
 
-    private void CheckPos()
-    {
-        if (m_TickPlayed || transform.parent == null)
-        {
-            return;
-        }
-
-        ITargetBehavior target = transform.parent.GetComponent<ITargetBehavior>();
-        if (target == null)
-        {
-            return;
-        }
-
-        m_TickPlayable = target.IsInRange(transform.localPosition.y);
-    }
-
+    private bool m_Moving = false;
     [SerializeField]
     private float m_Speed;
     public void Move()
     {
+        if (!m_Moving)
+        {
+            return;
+        }
+
         transform.localPosition += m_Speed * Time.deltaTime * Vector3.down;
+    }
+
+    public void StartMovement()
+    {
+        m_Moving = true;
+    }
+
+    public float GetSpeed()
+    {
+        return m_Speed;
+    }
+
+    public void SetTickType(int p_Type)
+    {
+        m_Single = p_Type == 0 ? true : false;
     }
 }

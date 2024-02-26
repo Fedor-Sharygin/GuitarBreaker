@@ -19,4 +19,9 @@ public interface IMusicTick
     public bool Playable();
     public void Play();
     public bool TickAvailableToPlay();
+
+    public void StartMovement();
+    public float GetSpeed();
+
+    public void SetTickType(int p_Type);
 }

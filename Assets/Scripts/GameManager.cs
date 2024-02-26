@@ -1,3 +1,4 @@
+using LevelManager;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -57,7 +58,7 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         return m_TickRange;
     }
 
-    private void Awake()
+    private void Start()
     {
         m_ButtonsActive = new bool[m_ButtonHammerConnections.Length];
         ResetButtonsState();
@@ -69,6 +70,8 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         {
             ComboCounts[i] += ComboCounts[i - 1];
         }
+
+        ParseInformation();
     }
 
     private void OnDestroy()
@@ -201,7 +204,7 @@ public class GameManager : MonoBehaviour, IMusicGameManager
 
     public AudioSource GetAudioSource()
     {
-        throw new System.NotImplementedException();
+        return m_LevelMusic;
     }
 
     private int m_CurPoints = 0;
@@ -219,7 +222,7 @@ public class GameManager : MonoBehaviour, IMusicGameManager
             return;
         }
 
-        if (p_CurTick != null)  // && p_CurTick.TickAvailableToPlay())
+        if (p_CurTick != null)
         {
             IncreaseCombo();
         }
@@ -228,21 +231,84 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         m_PointsText.text = m_CurPoints.ToString();
     }
 
+    [SerializeField]
+    private GameObject m_TickPrefab;
+    private List<IMusicTick> m_LevelTicks = new List<IMusicTick>();
     public void ParseInformation()
     {
-        //TO-DO:
-        //Parse json info about each row.
-        //Place them local as Row GO child localPos.y = timInfo * tickSpeed
-        throw new System.NotImplementedException();
+        float TickSpeed = m_TickPrefab.GetComponent<IMusicTick>().GetSpeed();
+
+        foreach (TickInfo Info in m_LevelInfo.MusicTicks)
+        {
+            GameObject NewTick = Instantiate(m_TickPrefab, m_Targets[Info.Row].transform);
+            NewTick.transform.localPosition = new Vector3(0, TickSpeed * Info.TimeStamp, .15f);
+            NewTick.transform.localRotation = Quaternion.identity;
+
+            m_LevelTicks.Add(NewTick.GetComponent<IMusicTick>());
+            if (Info.Length > 0)
+            {
+                NewTick.transform.localScale.Scale(new Vector3(1, Info.Length, 1));
+            }
+            m_LevelTicks[m_LevelTicks.Count - 1].SetTickType(Info.Single ? 0 : 1);
+        }
+
+        SetPointsText("0");
+        SetComboCountText("x 0");
+        SetComboMultText("x 1");
     }
 
+    private void SetPointsText(string p_PointsText)
+    {
+        if (m_PointsText == null)
+        {
+            return;
+        }
+        m_PointsText.text = p_PointsText;
+    }
+    private void SetComboCountText(string p_ComboCountText)
+    {
+        if (m_ComboCountText == null)
+        {
+            return;
+        }
+        m_ComboCountText.text = p_ComboCountText;
+    }
+    private void SetComboMultText(string p_ComboMultText)
+    {
+        if (m_ComboMultText == null)
+        {
+            return;
+        }
+        m_ComboMultText.text = p_ComboMultText;
+    }
+
+    [SerializeField]
+    private AudioSource m_LevelMusic;
     public IEnumerator PassAudio()
     {
-        throw new System.NotImplementedException();
+        yield return GlobalNamespace.GlobalMethods.GetAudioClip(m_LevelInfo.MusicName,
+            p_AudioClip =>
+            {
+                m_LevelMusic.clip = p_AudioClip;
+                m_LevelMusic.loop = false;
+                m_LevelMusic.Play();
+
+                foreach (IMusicTick Tick in m_LevelTicks)
+                {
+                    Tick.StartMovement();
+                }
+
+                GlobalNamespace.GlobalMethods.StartLevel();
+            }
+        );
     }
 
+    private int m_CurLevelIdx;
+    private LevelInfo m_LevelInfo;
     public void SetCurrentLevel(int p_LevelIdx)
     {
-        throw new System.NotImplementedException();
+        m_CurLevelIdx = p_LevelIdx;
+        m_LevelInfo = LevelLoader.giGameInfo.Levels[p_LevelIdx];
+        StartCoroutine("PassAudio");
     }
 }
