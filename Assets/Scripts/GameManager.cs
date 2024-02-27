@@ -15,6 +15,9 @@ public class GameManager : MonoBehaviour, IMusicGameManager
     }
     [SerializeField]
     private ButtonHammerConnection[] m_ButtonHammerConnections;
+    #if UNITY_STANDALONE || UNITY_EDITOR
+    private bool[] m_PrevButtonState = new bool[4];
+    #endif
     private bool[] m_ButtonsActive;
     [SerializeField]
     private TargetBehavior[] m_Targets;
@@ -145,6 +148,11 @@ public class GameManager : MonoBehaviour, IMusicGameManager
 
         AnimateHammers();
         ActivateTargets();
+        
+        #if UNITY_STANDALONE || UNITY_EDITOR
+        CheckEditorState();
+        Array.Copy(m_ButtonsActive, m_PrevButtonState, 4);
+        #endif
     }
 
     private void AnimateHammers()
@@ -171,6 +179,36 @@ public class GameManager : MonoBehaviour, IMusicGameManager
             ++ButtonIdx;
         }
     }
+
+    #if UNITY_STANDALONE || UNITY_EDITOR
+    private void CheckEditorState()
+    {
+        if (LevelEditor.m_LevelEditingState)
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                if (m_ButtonsActive[i] == m_PrevButtonState[i])
+                {
+                    continue;
+                }
+
+                if (m_ButtonsActive[i])
+                {
+                    LevelEditor.AddBeatStart(i);
+                }
+                else
+                {
+                    LevelEditor.AddBeatEnd(i);
+                }
+            }
+        }
+
+        if (Input.GetKeyDown(GlobalNamespace.GeneralSettings.m_DebugRecordingButton))
+        {
+            LevelEditor.FlipEditState();
+        }
+    }
+    #endif
 
     private uint m_ComboIdx = 0;
     private int m_TickCount = 0;

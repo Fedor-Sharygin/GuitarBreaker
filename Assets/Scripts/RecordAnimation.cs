@@ -3,14 +3,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RecordAnimation : MonoBehaviour
 {
-    private SpriteRenderer srSprite;
+    private SpriteRenderer m_SpriteRenderer;
+    private RawImage m_RawImage;
 
     private void Awake()
     {
-        srSprite = GetComponent<SpriteRenderer>();
+        m_SpriteRenderer = GetComponent<SpriteRenderer>();
+        m_RawImage = GetComponent<RawImage>();
         LevelManager.LevelEditor.SetRecordingSymbol(this);
         FlipRecording();
     }
@@ -21,24 +24,49 @@ public class RecordAnimation : MonoBehaviour
         bRecording = !bRecording;
         if (!bRecording)
         {
-            Color NColor = srSprite.color;
-            NColor.a = 0f;
-            srSprite.color = NColor;
+            if (m_SpriteRenderer == null && m_RawImage == null)
+            {
+                return;
+            }
+
+            Color SymbolColor;
+            if (m_SpriteRenderer != null)
+            {
+                SymbolColor = m_SpriteRenderer.color;
+                SymbolColor.a = 0f;
+                m_SpriteRenderer.color = SymbolColor;
+            }
+            else
+            {
+                SymbolColor = m_RawImage.color;
+                SymbolColor.a = 0f;
+                m_RawImage.color = SymbolColor;
+            }
         }
     }
 
     private float fAlphaTime = 0f;
     private void Update()
     {
-        if (!bRecording)
+        if (!bRecording || (m_SpriteRenderer == null && m_RawImage == null))
         {
             return;
         }
 
         fAlphaTime += Time.deltaTime;
-        Color NColor = srSprite.color;
-        NColor.a = .75f + .2f * Mathf.Sin(fAlphaTime);
-        srSprite.color = NColor;
+        Color SymbolColor;
+        if (m_SpriteRenderer != null)
+        {
+            SymbolColor = m_SpriteRenderer.color;
+            SymbolColor.a = .75f + .2f * Mathf.Sin(fAlphaTime);
+            m_SpriteRenderer.color = SymbolColor;
+        }
+        else
+        {
+            SymbolColor = m_RawImage.color;
+            SymbolColor.a = .75f + .2f * Mathf.Sin(fAlphaTime);
+            m_RawImage.color = SymbolColor;
+        }
     }
 }
 

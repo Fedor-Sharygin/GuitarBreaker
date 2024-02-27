@@ -103,23 +103,23 @@ public class TargetBehavior : MonoBehaviour, ITargetBehavior
         Debug.Log($"LOG: Target [{name}] is trying to Grant Points");
         if (m_CurTickAvailable != null)
         {
-            Debug.Log($"LOG: Target [{gameObject.name}] granted points from Tick [{((RowTick)m_CurTickAvailable).name}]");
+            //Debug.Log($"LOG: Target [{gameObject.name}] granted points from Tick [{((RowTick)m_CurTickAvailable).name}]");
             if (ActivatedTick())
             {
-                Debug.Log($"LOG: Target [{name}] grants points with Combo Increase");
+                //Debug.Log($"LOG: Target [{name}] grants points with Combo Increase");
                 m_TickActivationWindow?.Stop();
                 m_PointTimer?.Play();
                 RowTick.GrantPoints(5, (RowTick)m_CurTickAvailable);
             }
             else if (m_CurTickAvailable.TickAvailableToPlay())
             {
-                Debug.Log($"LOG: Target [{name}] grants points NO Combo Increase");
+                //Debug.Log($"LOG: Target [{name}] grants points NO Combo Increase");
                 RowTick.GrantPoints(5);
             }
         }
         else if (JustActivated())
         {
-            Debug.Log($"LOG: Target [{gameObject.name}] breaks combo");
+            //Debug.Log($"LOG: Target [{gameObject.name}] breaks combo");
             m_TickActivationWindow?.Stop();
             m_PointTimer?.Stop();
             RowTick.GrantPoints(0);

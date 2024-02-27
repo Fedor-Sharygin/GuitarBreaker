@@ -11,7 +11,7 @@ namespace GlobalNamespace
         public static List<char> m_PlayerControls = new List<char>{ 'Z', 'X', 'C', 'V' };
 
         #if UNITY_STANDALONE || UNITY_EDITOR
-        public static KeyCode m_DebugRecording = KeyCode.F9;
+        public static KeyCode m_DebugRecordingButton = KeyCode.F9;
         #endif
     }
 }

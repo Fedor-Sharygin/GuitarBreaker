@@ -79,7 +79,7 @@ public class MainMenuAnimation : MonoBehaviour
             true, CurLevelInfo, auSource);
         #endif
 
-        yield return GlobalNamespace.GlobalMethods.GetAudioClip(CurLevelInfo.MusicName,
+        yield return GlobalMethods.GetAudioClip(CurLevelInfo.MusicName,
             acAudioClip =>
             {
                 auSource.clip = acAudioClip;

@@ -13,12 +13,12 @@ namespace LevelManager
         public bool Single;
         public float Length;
 
-        public TickInfo(int NRow, float NTimeStamp, bool NSignle, float NLength)
+        public TickInfo(int p_Row, float p_TimeStamp, bool p_Signle, float p_Length)
         {
-            Row = NRow;
-            TimeStamp = NTimeStamp;
-            Single = NSignle;
-            Length = NLength;
+            Row = p_Row;
+            TimeStamp = p_TimeStamp;
+            Single = p_Signle;
+            Length = p_Length;
         }
     }
     [Serializable]
@@ -26,7 +26,7 @@ namespace LevelManager
     {
         public string MusicName;
         public string LevelName;
-        public int BPM;
+        public float BPM;
         public TickInfo[] MusicTicks;
     }
 }
