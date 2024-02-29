@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour, IMusicGameManager
 {
@@ -61,6 +62,7 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         return m_TickRange;
     }
 
+    //private GuitarSmasherInputControls m_InputControls;
     private void Start()
     {
         m_ButtonsActive = new bool[m_ButtonHammerConnections.Length];
@@ -75,12 +77,123 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         }
 
         ParseInformation();
+
+        //m_InputControls = new GuitarSmasherInputControls();
+        
+        //#if !(UNITY_ANDROID || UNITY_IOS)
+        //m_InputControls.Player.BlueInput.started    += TargetControlStart;
+        //m_InputControls.Player.RedInput.started     += TargetControlStart;
+        //m_InputControls.Player.GreenInput.started   += TargetControlStart;
+        //m_InputControls.Player.YellowInput.started  += TargetControlStart;
+
+        //m_InputControls.Player.BlueInput.canceled   += TargetControlEnd;
+        //m_InputControls.Player.RedInput.canceled    += TargetControlEnd;
+        //m_InputControls.Player.GreenInput.canceled  += TargetControlEnd;
+        //m_InputControls.Player.YellowInput.canceled += TargetControlEnd;
+
+        //#if UNITY_STANDALONE || UNITY_EDITOR
+        //m_InputControls.Player.DebugInput.started   += DebugInputFlip;
+        //#endif
+
+        //#endif
     }
 
     private void OnDestroy()
     {
         IMusicTick.GrantPointsEvent -= ReceivePoints;
+        
+        //#if !(UNITY_ANDROID || UNITY_IOS)
+        //m_InputControls.Player.BlueInput.started    -= TargetControlStart;
+        //m_InputControls.Player.RedInput.started     -= TargetControlStart;
+        //m_InputControls.Player.GreenInput.started   -= TargetControlStart;
+        //m_InputControls.Player.YellowInput.started  -= TargetControlStart;
+
+        //m_InputControls.Player.BlueInput.canceled   -= TargetControlEnd;
+        //m_InputControls.Player.RedInput.canceled    -= TargetControlEnd;
+        //m_InputControls.Player.GreenInput.canceled  -= TargetControlEnd;
+        //m_InputControls.Player.YellowInput.canceled -= TargetControlEnd;
+        
+        //#if UNITY_STANDALONE || UNITY_EDITOR
+        //m_InputControls.Player.DebugInput.started   -= DebugInputFlip;
+        //#endif
+
+        //#endif
     }
+    
+    #if !(UNITY_ANDROID || UNITY_IOS)
+    private void TargetControlStart(InputAction.CallbackContext p_InputContext)
+    {
+        switch (p_InputContext.action.name)
+        {
+            case "Blue Input":   m_ButtonsActive[0] = true;  break;
+            case "Red Input":    m_ButtonsActive[1] = true;  break;
+            case "Green Input":  m_ButtonsActive[2] = true;  break;
+            case "Yellow Input": m_ButtonsActive[3] = true;  break;
+        }
+    }
+
+    private void TargetControlEnd(InputAction.CallbackContext p_InputContext)
+    {
+        switch (p_InputContext.action.name)
+        {
+            case "Blue Input":   m_ButtonsActive[0] = false; break;
+            case "Red Input":    m_ButtonsActive[1] = false; break;
+            case "Green Input":  m_ButtonsActive[2] = false; break;
+            case "Yellow Input": m_ButtonsActive[3] = false; break;
+        }
+    }
+
+    public void TargetControl(InputAction.CallbackContext p_InputContext)
+    {
+        if (p_InputContext.phase == InputActionPhase.Started)
+        {
+            TargetControlStart(p_InputContext);
+        }
+        else if (p_InputContext.phase == InputActionPhase.Canceled)
+        {
+            TargetControlEnd(p_InputContext);
+        }
+    }
+    
+    #if UNITY_STANDALONE || UNITY_EDITOR
+    private void DebugInputFlip(InputAction.CallbackContext _p_InputContext)
+    {
+        LevelEditor.FlipEditState();
+    }
+    public void DebugInput(InputAction.CallbackContext p_InputContext)
+    {
+        if (p_InputContext.phase != InputActionPhase.Started)
+        {
+            return;
+        }
+
+        DebugInputFlip(p_InputContext);
+    }
+    private void CheckEditorState()
+    {
+        if (LevelEditor.m_LevelEditingState)
+        {
+            for (int i = 0; i < 4; ++i)
+            {
+                if (m_ButtonsActive[i] == m_PrevButtonState[i])
+                {
+                    continue;
+                }
+
+                if (m_ButtonsActive[i])
+                {
+                    LevelEditor.AddBeatStart(i);
+                }
+                else
+                {
+                    LevelEditor.AddBeatEnd(i);
+                }
+            }
+        }
+    }
+    #endif
+
+    #endif
 
     private void ResetButtonsState()
     {
@@ -92,7 +205,6 @@ public class GameManager : MonoBehaviour, IMusicGameManager
     
 
     #if UNITY_ANDROID || UNITY_IOS
-
     private void CheckButtonHit(RaycastHit CurHit)
     {
         if (CurHit.collider == null)
@@ -108,15 +220,12 @@ public class GameManager : MonoBehaviour, IMusicGameManager
             }
         }
     }
-
     #endif
 
     private void FixedUpdate()
     {
-        ResetButtonsState();
-
         #if UNITY_ANDROID || UNITY_IOS
-
+        ResetButtonsState();
         foreach (Touch CurTouch in Input.touches)
         {
             Ray TouchRay = Camera.main.ScreenPointToRay(CurTouch.position);
@@ -126,25 +235,29 @@ public class GameManager : MonoBehaviour, IMusicGameManager
                 CheckButtonHit(Hit);
             }
         }
-
-        #else
-        
-        int ButtonIdx = 0;
-        foreach (char ButtonControl in GlobalNamespace.GeneralSettings.m_PlayerControls)
-        {
-            if (ButtonIdx >= m_ButtonHammerConnections.Length)
-            {
-                break;
-            }
-            KeyCode CurButtonControl = KeyCode.A + (ButtonControl - 'A');
-            if (Input.GetKey(CurButtonControl))
-            {
-                m_ButtonsActive[ButtonIdx] = true;
-            }
-            ++ButtonIdx;
-        }
-
         #endif
+
+        //#else
+        
+        //int ButtonIdx = 0;
+        //foreach (KeyCode ButtonControl in GlobalNamespace.GeneralSettings.m_PlayerControls)
+        //{
+        //    if (ButtonIdx >= m_ButtonHammerConnections.Length)
+        //    {
+        //        break;
+        //    }
+
+        //    //PlayerInput playerInput = GetComponent<PlayerInput>();
+        //    //playerInput;
+
+        //    if (Input.GetKey(ButtonControl))
+        //    {
+        //        m_ButtonsActive[ButtonIdx] = true;
+        //    }
+        //    ++ButtonIdx;
+        //}
+
+        //#endif
 
         AnimateHammers();
         ActivateTargets();
@@ -179,36 +292,6 @@ public class GameManager : MonoBehaviour, IMusicGameManager
             ++ButtonIdx;
         }
     }
-
-    #if UNITY_STANDALONE || UNITY_EDITOR
-    private void CheckEditorState()
-    {
-        if (LevelEditor.m_LevelEditingState)
-        {
-            for (int i = 0; i < 4; ++i)
-            {
-                if (m_ButtonsActive[i] == m_PrevButtonState[i])
-                {
-                    continue;
-                }
-
-                if (m_ButtonsActive[i])
-                {
-                    LevelEditor.AddBeatStart(i);
-                }
-                else
-                {
-                    LevelEditor.AddBeatEnd(i);
-                }
-            }
-        }
-
-        if (Input.GetKeyDown(GlobalNamespace.GeneralSettings.m_DebugRecordingButton))
-        {
-            LevelEditor.FlipEditState();
-        }
-    }
-    #endif
 
     private uint m_ComboIdx = 0;
     private int m_TickCount = 0;
@@ -274,6 +357,11 @@ public class GameManager : MonoBehaviour, IMusicGameManager
     private List<IMusicTick> m_LevelTicks = new List<IMusicTick>();
     public void ParseInformation()
     {
+        if (m_LevelInfo.MusicTicks == null)
+        {
+            return;
+        }
+
         float TickSpeed = m_TickPrefab.GetComponent<IMusicTick>().GetSpeed();
 
         foreach (TickInfo Info in m_LevelInfo.MusicTicks)
@@ -282,10 +370,18 @@ public class GameManager : MonoBehaviour, IMusicGameManager
             NewTick.transform.localPosition = new Vector3(0, TickSpeed * Info.TimeStamp, .15f);
             NewTick.transform.localRotation = Quaternion.identity;
 
-            m_LevelTicks.Add(NewTick.GetComponent<IMusicTick>());
-            if (Info.Length > 0)
+            SpriteRenderer TickSprite = NewTick.transform.GetComponentInChildren<SpriteRenderer>();
+            if (TickSprite != null)
             {
-                NewTick.transform.localScale.Scale(new Vector3(1, Info.Length, 1));
+                SpriteRenderer RowSprite = m_ButtonHammerConnections[Info.Row].m_ButtonCollider.GetComponent<SpriteRenderer>();
+                TickSprite.color = RowSprite.color;
+            }
+
+            m_LevelTicks.Add(NewTick.GetComponent<IMusicTick>());
+            if (!Info.Single)
+            {
+                BoxCollider TickBox = NewTick.GetComponent<BoxCollider>();
+                NewTick.transform.localScale = new Vector3(1, Info.Length / TickBox.size.y, 1);
             }
             m_LevelTicks[m_LevelTicks.Count - 1].SetTickType(Info.Single ? 0 : 1);
         }
