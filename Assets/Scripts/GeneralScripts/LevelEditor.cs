@@ -39,11 +39,7 @@ namespace LevelManager
         private static LevelInfo m_LevelInfo;
         private static AudioSource m_AudioSource;
         private static bool m_IntroRecording;
-
         private static List<List<Tuple<float, float>>> m_TickTimeStamps = new List<List<Tuple<float, float>>>(4);
-        private static List<float> m_StartTimeStamps = new List<float>();
-        private static List<float> m_EndTimeStamps = new List<float>();
-        private static List<int> m_RowNums = new List<int>();
 
         public static float[] m_TimePerBeat = new float[4];
         private static float m_TimePerHalf;
@@ -73,11 +69,6 @@ namespace LevelManager
             m_LevelInfo = p_LevelInfo;
             m_AudioSource = p_AudioSource;
 
-            //m_TickTimeStamps.Clear();
-            m_StartTimeStamps.Clear();
-            m_EndTimeStamps.Clear();
-            m_RowNums.Clear();
-
             m_TimePerQuarter = 60f / m_LevelInfo.BPM;
             m_TimePerHalf = m_TimePerQuarter * 2f;
             m_TimePerEighth = m_TimePerQuarter / 2f;
@@ -90,21 +81,21 @@ namespace LevelManager
         }
 
         private static int m_BeatRoundingIdx = 2;
-        public static float RoundedTime()
+        public static float RoundedTime(float p_TimeToRound)
         {
-            int BeatCount = Mathf.RoundToInt(m_AudioSource.time / m_TimePerBeat[m_BeatRoundingIdx]);
+            int BeatCount = Mathf.RoundToInt(p_TimeToRound / m_TimePerBeat[m_BeatRoundingIdx]);
             return BeatCount * m_TimePerBeat[m_BeatRoundingIdx];
         }
 
         public static void AddBeatStart(int p_RowNum)
         {
-            Tuple<float, float> TimeStampTuple = new Tuple<float, float>(RoundedTime(), int.MaxValue);
+            Tuple<float, float> TimeStampTuple = new Tuple<float, float>(RoundedTime(m_AudioSource.time), int.MaxValue);
             m_TickTimeStamps[p_RowNum].Add(TimeStampTuple);
         }
         public static void AddBeatEnd(int p_RowNum)
         {
             Tuple<float, float> CurTuple = 
-                new Tuple<float, float>(m_TickTimeStamps[p_RowNum][m_TickTimeStamps[p_RowNum].Count - 1].Item1, RoundedTime());
+                new Tuple<float, float>(m_TickTimeStamps[p_RowNum][m_TickTimeStamps[p_RowNum].Count - 1].Item1, RoundedTime(m_AudioSource.time));
             m_TickTimeStamps[p_RowNum][m_TickTimeStamps[p_RowNum].Count - 1] = CurTuple;
         }
 
@@ -115,7 +106,7 @@ namespace LevelManager
                 List<Tuple<float, float>> RowTickList = m_TickTimeStamps[i];
                 foreach (Tuple<float, float> TickTimes in RowTickList)
                 {
-                    float Length = TickTimes.Item2 - TickTimes.Item1;
+                    float Length = RoundedTime(TickTimes.Item2 - TickTimes.Item1);
                     bool Single = Length < m_TimePerBeat[m_BeatRoundingIdx];
                     TickList.Add(new TickInfo(i, TickTimes.Item1, Single, Length));
                 }
@@ -125,20 +116,6 @@ namespace LevelManager
             string FilePath = Path.Combine(GlobalNamespace.GlobalMethods.PersistentFolder, m_CurLevelFile + ".json");
             string JsonDesc = JsonUtility.ToJson(m_LevelInfo, true);
             File.WriteAllText(FilePath, JsonDesc);
-
-            //foreach (float TimeStamp in lfTimeStamps)
-            //{
-            //    NTickList.Add(new TickInfo(TimeStamp));
-            //}
-
-            //if (bIntroRecording)
-            //{
-            //    liLevel.IntroBeats = NTickList.ToArray();
-            //}
-            //else
-            //{
-            //    liLevel.GameBeats = NTickList.ToArray();
-            //}
         }
     }
 }

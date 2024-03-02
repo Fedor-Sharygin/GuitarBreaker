@@ -56,27 +56,28 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\CommonStructs.cs" />
-    <Compile Include="Assets\Scripts\GlobalMethods.cs" />
-    <Compile Include="Assets\Scripts\SettingsMenu.cs" />
+    <Compile Include="Assets\Scripts\GeneralScripts\CommonStructs.cs" />
+    <Compile Include="Assets\Scripts\GeneralScripts\GlobalMethods.cs" />
+    <Compile Include="Assets\Scripts\MenuScripts\SettingsMenu.cs" />
     <Compile Include="Assets\Scripts\TargetBehavior.cs" />
-    <Compile Include="Assets\Scripts\MainMenu.cs" />
-    <Compile Include="Assets\Scripts\IMusicTick.cs" />
-    <Compile Include="Assets\Scripts\LevelEditor.cs" />
+    <Compile Include="Assets\Scripts\MenuScripts\MainMenu.cs" />
+    <Compile Include="Assets\Scripts\MusicGameInterfaces\IMusicTick.cs" />
+    <Compile Include="Assets\Samples\Input System\1.5.1\Custom Binding Composite\CustomComposite.cs" />
+    <Compile Include="Assets\Scripts\GeneralScripts\LevelEditor.cs" />
     <Compile Include="Assets\Input\GuitarSmasherInputControls.cs" />
-    <Compile Include="Assets\Scripts\MainMenuAnimation.cs" />
-    <Compile Include="Assets\Scripts\GeneralSettings.cs" />
-    <Compile Include="Assets\Scripts\RecordAnimation.cs" />
-    <Compile Include="Assets\Scripts\Timer.cs" />
-    <Compile Include="Assets\Scripts\IMusicGameManager.cs" />
-    <Compile Include="Assets\Scripts\LevelLoader.cs" />
-    <Compile Include="Assets\Scripts\GeneralLevelInfo.cs" />
-    <Compile Include="Assets\Scripts\ITargetBehavior.cs" />
+    <Compile Include="Assets\Scripts\MenuScripts\MainMenuAnimation.cs" />
+    <Compile Include="Assets\Scripts\GeneralScripts\GeneralSettings.cs" />
+    <Compile Include="Assets\Scripts\GeneralScripts\RecordAnimation.cs" />
+    <Compile Include="Assets\Scripts\GeneralScripts\Timer.cs" />
+    <Compile Include="Assets\Scripts\GeneralScripts\LegacyTMProTextConnector.cs" />
+    <Compile Include="Assets\Scripts\MusicGameInterfaces\IMusicGameManager.cs" />
+    <Compile Include="Assets\Scripts\GeneralScripts\LevelLoader.cs" />
+    <Compile Include="Assets\Scripts\GeneralScripts\GeneralLevelInfo.cs" />
+    <Compile Include="Assets\Scripts\MusicGameInterfaces\ITargetBehavior.cs" />
     <Compile Include="Assets\Scripts\RowTick.cs" />
     <Compile Include="Assets\Scripts\HammerAnimator.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Samples\Input System\1.5.1\Custom Binding Composite\CustomComposite.cs" />
-    <Compile Include="Assets\Scripts\LegacyTMProTextConnector.cs" />
+    <Compile Include="Assets\Scripts\MaterialScripts\ScalingRepeatPass.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -93,6 +94,7 @@
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\Shaders\CutoutRepeatShader.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />

@@ -154,6 +154,8 @@ public class GameManager : MonoBehaviour, IMusicGameManager
             TargetControlEnd(p_InputContext);
         }
     }
+
+    #endif
     
     #if UNITY_STANDALONE || UNITY_EDITOR
     private void DebugInputFlip(InputAction.CallbackContext _p_InputContext)
@@ -191,8 +193,6 @@ public class GameManager : MonoBehaviour, IMusicGameManager
             }
         }
     }
-    #endif
-
     #endif
 
     private void ResetButtonsState()
@@ -363,25 +363,51 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         }
 
         float TickSpeed = m_TickPrefab.GetComponent<IMusicTick>().GetSpeed();
+        Color[] RowColors = new Color[m_ButtonHammerConnections.Length];
+        int Idx = 0;
+        foreach (ButtonHammerConnection Connection in m_ButtonHammerConnections)
+        {
+            RowColors[Idx] = Connection.m_ButtonCollider.GetComponent<SpriteRenderer>().color;
+            ++Idx;
+        }
 
         foreach (TickInfo Info in m_LevelInfo.MusicTicks)
         {
             GameObject NewTick = Instantiate(m_TickPrefab, m_Targets[Info.Row].transform);
             NewTick.transform.localPosition = new Vector3(0, TickSpeed * Info.TimeStamp, .15f);
             NewTick.transform.localRotation = Quaternion.identity;
+            Color RowColor = RowColors[Info.Row];
 
-            SpriteRenderer TickSprite = NewTick.transform.GetComponentInChildren<SpriteRenderer>();
-            if (TickSprite != null)
+            SpriteRenderer[] TickSprites = NewTick.GetComponentsInChildren<SpriteRenderer>(true);
+            if (TickSprites != null)
             {
-                SpriteRenderer RowSprite = m_ButtonHammerConnections[Info.Row].m_ButtonCollider.GetComponent<SpriteRenderer>();
-                TickSprite.color = RowSprite.color;
+                foreach (SpriteRenderer TickSprite in TickSprites)
+                {
+                    TickSprite.color = RowColor;
+                }
             }
+            NewTick.GetComponent<Renderer>().material.SetColor("_TintColor", RowColor);
 
             m_LevelTicks.Add(NewTick.GetComponent<IMusicTick>());
             if (!Info.Single)
             {
                 BoxCollider TickBox = NewTick.GetComponent<BoxCollider>();
-                NewTick.transform.localScale = new Vector3(1, Info.Length / TickBox.size.y, 1);
+                Vector3 TickScale = NewTick.transform.localScale;
+                float PrevYScale = TickScale.y;
+                float YScaler = Info.Length / TickBox.size.y;
+                TickScale.y = YScaler;
+                NewTick.transform.localScale = TickScale;
+
+                for (int i = 0; i < NewTick.transform.childCount; ++i)
+                {
+                    Transform ModelTransform = NewTick.transform.GetChild(i);
+                    Vector3 ModelScale = ModelTransform.localScale;
+                    ModelScale.y /= (YScaler / PrevYScale);
+                    ModelTransform.localPosition = new Vector3(0, (i == 0 ? -1 : 1) * .45f, 0);
+                    ModelTransform.localScale = ModelScale;
+                }
+
+                NewTick.transform.localPosition += new Vector3(0, YScaler / 2, 0);
             }
             m_LevelTicks[m_LevelTicks.Count - 1].SetTickType(Info.Single ? 0 : 1);
         }
