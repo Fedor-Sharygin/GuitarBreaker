@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour, IMusicGameManager
 {
@@ -62,7 +63,6 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         return m_TickRange;
     }
 
-    //private GuitarSmasherInputControls m_InputControls;
     private void Start()
     {
         m_ButtonsActive = new bool[m_ButtonHammerConnections.Length];
@@ -77,47 +77,11 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         }
 
         ParseInformation();
-
-        //m_InputControls = new GuitarSmasherInputControls();
-        
-        //#if !(UNITY_ANDROID || UNITY_IOS)
-        //m_InputControls.Player.BlueInput.started    += TargetControlStart;
-        //m_InputControls.Player.RedInput.started     += TargetControlStart;
-        //m_InputControls.Player.GreenInput.started   += TargetControlStart;
-        //m_InputControls.Player.YellowInput.started  += TargetControlStart;
-
-        //m_InputControls.Player.BlueInput.canceled   += TargetControlEnd;
-        //m_InputControls.Player.RedInput.canceled    += TargetControlEnd;
-        //m_InputControls.Player.GreenInput.canceled  += TargetControlEnd;
-        //m_InputControls.Player.YellowInput.canceled += TargetControlEnd;
-
-        //#if UNITY_STANDALONE || UNITY_EDITOR
-        //m_InputControls.Player.DebugInput.started   += DebugInputFlip;
-        //#endif
-
-        //#endif
     }
 
     private void OnDestroy()
     {
         IMusicTick.GrantPointsEvent -= ReceivePoints;
-        
-        //#if !(UNITY_ANDROID || UNITY_IOS)
-        //m_InputControls.Player.BlueInput.started    -= TargetControlStart;
-        //m_InputControls.Player.RedInput.started     -= TargetControlStart;
-        //m_InputControls.Player.GreenInput.started   -= TargetControlStart;
-        //m_InputControls.Player.YellowInput.started  -= TargetControlStart;
-
-        //m_InputControls.Player.BlueInput.canceled   -= TargetControlEnd;
-        //m_InputControls.Player.RedInput.canceled    -= TargetControlEnd;
-        //m_InputControls.Player.GreenInput.canceled  -= TargetControlEnd;
-        //m_InputControls.Player.YellowInput.canceled -= TargetControlEnd;
-        
-        //#if UNITY_STANDALONE || UNITY_EDITOR
-        //m_InputControls.Player.DebugInput.started   -= DebugInputFlip;
-        //#endif
-
-        //#endif
     }
     
     #if !(UNITY_ANDROID || UNITY_IOS)
@@ -224,6 +188,11 @@ public class GameManager : MonoBehaviour, IMusicGameManager
 
     private void FixedUpdate()
     {
+        if (!m_LevelStarted || GlobalNamespace.GlobalMethods.bLevelEnded)
+        {
+            return;
+        }
+
         #if UNITY_ANDROID || UNITY_IOS
         ResetButtonsState();
         foreach (Touch CurTouch in Input.touches)
@@ -237,28 +206,6 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         }
         #endif
 
-        //#else
-        
-        //int ButtonIdx = 0;
-        //foreach (KeyCode ButtonControl in GlobalNamespace.GeneralSettings.m_PlayerControls)
-        //{
-        //    if (ButtonIdx >= m_ButtonHammerConnections.Length)
-        //    {
-        //        break;
-        //    }
-
-        //    //PlayerInput playerInput = GetComponent<PlayerInput>();
-        //    //playerInput;
-
-        //    if (Input.GetKey(ButtonControl))
-        //    {
-        //        m_ButtonsActive[ButtonIdx] = true;
-        //    }
-        //    ++ButtonIdx;
-        //}
-
-        //#endif
-
         AnimateHammers();
         ActivateTargets();
         
@@ -266,6 +213,12 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         CheckEditorState();
         Array.Copy(m_ButtonsActive, m_PrevButtonState, 4);
         #endif
+
+        if (!m_LevelMusic.isPlaying && !GlobalNamespace.GlobalMethods.bLevelEnded)
+        {
+            GlobalNamespace.GlobalMethods.EndLevel();
+            OnMusicEnd();
+        }
     }
 
     private void AnimateHammers()
@@ -305,18 +258,20 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         Debug.Log($"LOG: Combo broken");
         m_ComboIdx = 0;
         m_TickCount = 0;
+        SetComboMultText(ComboMultipliers[m_ComboIdx].ToString());
+        SetComboCountText(m_TickCount.ToString());
     }
     public void IncreaseCombo()
     {
         Debug.Log($"LOG: Combo increased");
         m_TickCount++;
-        m_ComboCountText.text = m_TickCount.ToString();
+        SetComboCountText(m_TickCount.ToString());
         if (m_ComboIdx < ComboCounts.Length && m_TickCount >= ComboCounts[m_ComboIdx])
         {
             Debug.Log($"LOG: Combo is at next idx {m_ComboIdx}");
             m_ComboIdx++;
         }
-        m_ComboMultText.text = GetComboMultiplier().ToString();
+        SetComboMultText(GetComboMultiplier().ToString());
     }
     public int GetComboMultiplier()
     {
@@ -349,7 +304,8 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         }
         Debug.Log($"LOG: Points granted: {p_Points}");
         m_CurPoints += GetComboMultiplier() * p_Points;
-        m_PointsText.text = m_CurPoints.ToString();
+
+        SetPointsText(m_CurPoints.ToString());
     }
 
     [SerializeField]
@@ -413,8 +369,8 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         }
 
         SetPointsText("0");
-        SetComboCountText("x 0");
-        SetComboMultText("x 1");
+        SetComboCountText("0");
+        SetComboMultText("1");
     }
 
     private void SetPointsText(string p_PointsText)
@@ -431,7 +387,7 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         {
             return;
         }
-        m_ComboCountText.text = p_ComboCountText;
+        m_ComboCountText.text = "x" + p_ComboCountText;
     }
     private void SetComboMultText(string p_ComboMultText)
     {
@@ -439,11 +395,12 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         {
             return;
         }
-        m_ComboMultText.text = p_ComboMultText;
+        m_ComboMultText.text = "x" + p_ComboMultText;
     }
 
     [SerializeField]
     private AudioSource m_LevelMusic;
+    private bool m_LevelStarted = false;
     public IEnumerator PassAudio()
     {
         yield return GlobalNamespace.GlobalMethods.GetAudioClip(m_LevelInfo.MusicName,
@@ -458,6 +415,7 @@ public class GameManager : MonoBehaviour, IMusicGameManager
                     Tick.StartMovement();
                 }
 
+                m_LevelStarted = true;
                 GlobalNamespace.GlobalMethods.StartLevel();
             }
         );
@@ -470,5 +428,24 @@ public class GameManager : MonoBehaviour, IMusicGameManager
         m_CurLevelIdx = p_LevelIdx;
         m_LevelInfo = LevelLoader.giGameInfo.Levels[p_LevelIdx];
         StartCoroutine("PassAudio");
+    }
+
+    public void OnMusicEnd()
+    {
+        //TO-DO:
+        //Create a Coroutine infinite loop that plays some
+        //winning animation and calls the load main menu function
+
+        StartCoroutine(LastActions());
+    }
+
+    private IEnumerator LastActions()
+    {
+        do
+        {
+            yield return null;
+        } while (false);
+
+        SceneManager.LoadScene(0);
     }
 }

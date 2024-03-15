@@ -149,6 +149,10 @@ namespace LevelManager
                     false, GetMusicInfo(iLevelChosen), GM.GetAudioSource());
                 #endif
                 GM.SetCurrentLevel(iLevelChosen);
+                if (GM.GetAudioSource())
+                {
+                    GM.GetAudioSource().volume = GlobalNamespace.GeneralSettings.m_VolumePercentage;
+                }
             }
         }
 

@@ -9,6 +9,7 @@ public interface IMusicGameManager
     public void ParseInformation();
     public IEnumerator PassAudio();
     public AudioSource GetAudioSource();
+    public void OnMusicEnd();
 
     public void BreakCombo();
     public void IncreaseCombo();

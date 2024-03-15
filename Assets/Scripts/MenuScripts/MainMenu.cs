@@ -6,12 +6,21 @@ using TMPro;
 
 public class MainMenu : MonoBehaviour
 {
+
+    #if UNITY_EDITOR || UNITY_STANDALONE
+    private int m_Platform = 0;
+    #elif UNITY_ANDROID || UNITY_IOS
+    private int m_Platform = 1;
+    #endif
+
     [SerializeField]
     private TMP_Dropdown m_LevelSelect;
     [SerializeField]
     private MainMenuAnimation m_MenuAnim;
     public void Awake()
     {
+        GetComponentInParent<Animator>()?.SetInteger("PlatfromDevice", m_Platform);
+
         m_LevelSelect.ClearOptions();
         List<string> NewOptions = new List<string>();
         foreach (LevelInfo Level in LevelLoader.giGameInfo.Levels)
