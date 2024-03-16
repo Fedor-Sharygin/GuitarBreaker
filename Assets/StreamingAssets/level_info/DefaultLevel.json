@@ -1,0 +1,19 @@
+{
+    "MusicName": "*insert name here*.wav",
+    "LevelName": "*insert pretty Level name*",
+    "BPM": 0,
+    "MusicTicks": [
+        {
+            "Row;": "int 0-3",
+            "TimeStamp": "float of clip time stamp in seconds",
+            "Single": "bool if it is single",
+            "Length": "length of the music tick"
+        },
+        {
+            "Row;": 0,
+            "TimeStamp": 82.523,
+            "Single": false,
+            "Length": 1.123
+        }
+    ]
+}

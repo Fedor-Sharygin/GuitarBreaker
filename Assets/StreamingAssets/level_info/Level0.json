@@ -1,0 +1,763 @@
+{
+    "MusicName": "metal-dark-matter-111451.wav",
+    "LevelName": "Dark Matter Metal",
+    "BPM": 106.5,
+    "MusicTicks": [
+        {
+            "Row": 0,
+            "TimeStamp": 2.253521203994751,
+            "Single": false,
+            "Length": 4.507042407989502
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 11.549296379089356,
+            "Single": false,
+            "Length": 1.9718310832977296
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 14.36619758605957,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 16.056339263916017,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 17.1830997467041,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 18.873239517211915,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 20.84507179260254,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 21.690141677856447,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 23.661972045898439,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 25.352113723754884,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 26.47887420654297,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 27.042255401611329,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 28.73239517211914,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 30.704225540161134,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 31.267606735229493,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 34.3661994934082,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 36.619720458984378,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 44.788734436035159,
+            "Single": false,
+            "Length": 0.845070481300354
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 50.42253875732422,
+            "Single": false,
+            "Length": 1.9718310832977296
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 64.22535705566406,
+            "Single": false,
+            "Length": 2.253521203994751
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 68.7323989868164,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 69.57746887207031,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 70.1408462524414,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 70.98591613769531,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 72.11267852783203,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 73.80281829833985,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 75.77465057373047,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 76.61972045898438,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 78.30986022949219,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 80.28169250488281,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 81.40845489501953,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 82.25352478027344,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 84.78873443603516,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 85.91549682617188,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 87.60563659667969,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 90.42253875732422,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 98.591552734375,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 105.91549682617188,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 113.23944091796875,
+            "Single": false,
+            "Length": 2.253521203994751
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 122.53521728515625,
+            "Single": false,
+            "Length": 2.253521203994751
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 127.0422592163086,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 128.1690216064453,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 129.2957763671875,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 131.54930114746095,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 132.67605590820313,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 133.80282592773438,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 136.05633544921876,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 137.18310546875,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 138.3098602294922,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 140.84507751464845,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 141.97183227539063,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 143.09860229492188,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 0,
+            "TimeStamp": 145.35211181640626,
+            "Single": false,
+            "Length": 5.633802890777588
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 10.42253589630127,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 10.985916137695313,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 15.211268424987793,
+            "Single": false,
+            "Length": 0.5633803009986877
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 18.028169631958009,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 20.28169059753418,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 22.81690216064453,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 26.76056480407715,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 29.577465057373048,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 31.549297332763673,
+            "Single": false,
+            "Length": 0.5633803009986877
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 35.492958068847659,
+            "Single": false,
+            "Length": 0.845070481300354
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 38.87324142456055,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 41.408451080322269,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 42.25352096557617,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 45.91549301147461,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 47.04225540161133,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 47.887325286865237,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 55.21126937866211,
+            "Single": false,
+            "Length": 1.9718310832977296
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 59.154930114746097,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 64.22535705566406,
+            "Single": false,
+            "Length": 2.253521203994751
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 72.95774841308594,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 77.46479034423828,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 81.97183227539063,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 86.47887420654297,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 88.16901397705078,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 91.54930114746094,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 92.67605590820313,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 97.7464828491211,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 99.4366226196289,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 103.09859466552735,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 107.60563659667969,
+            "Single": false,
+            "Length": 0.5633803009986877
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 108.7323989868164,
+            "Single": false,
+            "Length": 1.9718310832977296
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 118.0281753540039,
+            "Single": false,
+            "Length": 1.690140962600708
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 130.42254638671876,
+            "Single": false,
+            "Length": 0.845070481300354
+        },
+        {
+            "Row": 1,
+            "TimeStamp": 144.22535705566407,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 10.42253589630127,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 10.985916137695313,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 20.0,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 24.225353240966798,
+            "Single": false,
+            "Length": 0.845070481300354
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 31.549297332763673,
+            "Single": false,
+            "Length": 0.5633803009986877
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 38.591548919677737,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 43.098594665527347,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 45.91549301147461,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 47.04225540161133,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 47.887325286865237,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 55.21126937866211,
+            "Single": false,
+            "Length": 1.9718310832977296
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 59.71831130981445,
+            "Single": false,
+            "Length": 1.9718310832977296
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 70.42253875732422,
+            "Single": false,
+            "Length": 0.5633803009986877
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 74.36620330810547,
+            "Single": false,
+            "Length": 0.845070481300354
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 83.66197204589844,
+            "Single": false,
+            "Length": 0.845070481300354
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 88.7323989868164,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 93.80281829833985,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 97.18310546875,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 100.56338500976563,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 104.22535705566406,
+            "Single": true,
+            "Length": 0.0
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 106.47887420654297,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 110.98591613769531,
+            "Single": false,
+            "Length": 1.9718310832977296
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 120.00000762939453,
+            "Single": false,
+            "Length": 1.9718310832977296
+        },
+        {
+            "Row": 2,
+            "TimeStamp": 134.92958068847657,
+            "Single": false,
+            "Length": 1.1267606019973755
+        },
+        {
+            "Row": 3,
+            "TimeStamp": 7.0422539710998539,
+            "Single": false,
+            "Length": 3.0985915660858156
+        },
+        {
+            "Row": 3,
+            "TimeStamp": 11.549296379089356,
+            "Single": false,
+            "Length": 1.9718310832977296
+        },
+        {
+            "Row": 3,
+            "TimeStamp": 14.084507942199707,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 3,
+            "TimeStamp": 19.436620712280275,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 3,
+            "TimeStamp": 29.01408576965332,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 3,
+            "TimeStamp": 40.28169250488281,
+            "Single": false,
+            "Length": 0.5633803009986877
+        },
+        {
+            "Row": 3,
+            "TimeStamp": 45.352115631103519,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 3,
+            "TimeStamp": 49.2957763671875,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 3,
+            "TimeStamp": 52.67605972290039,
+            "Single": false,
+            "Length": 1.9718310832977296
+        },
+        {
+            "Row": 3,
+            "TimeStamp": 61.971832275390628,
+            "Single": false,
+            "Length": 1.9718310832977296
+        },
+        {
+            "Row": 3,
+            "TimeStamp": 79.1549301147461,
+            "Single": false,
+            "Length": 0.845070481300354
+        },
+        {
+            "Row": 3,
+            "TimeStamp": 89.01408386230469,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 3,
+            "TimeStamp": 94.92958068847656,
+            "Single": false,
+            "Length": 0.28169015049934389
+        },
+        {
+            "Row": 3,
+            "TimeStamp": 101.97183227539063,
+            "Single": false,
+            "Length": 0.845070481300354
+        },
+        {
+            "Row": 3,
+            "TimeStamp": 139.7183074951172,
+            "Single": false,
+            "Length": 0.845070481300354
+        }
+    ]
+}
