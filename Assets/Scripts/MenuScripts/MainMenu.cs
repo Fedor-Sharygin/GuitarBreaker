@@ -19,7 +19,7 @@ public class MainMenu : MonoBehaviour
     private MainMenuAnimation m_MenuAnim;
     public void Awake()
     {
-        GetComponentInParent<Animator>()?.SetInteger("PlatfromDevice", m_Platform);
+        GetComponentInParent<Animator>()?.SetInteger("PlatformDevice", m_Platform);
 
         m_LevelSelect.ClearOptions();
         List<string> NewOptions = new List<string>();
